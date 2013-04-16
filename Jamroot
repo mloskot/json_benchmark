@@ -1,0 +1,36 @@
+#
+# Copyright (C) 2013 Mateusz Loskot <mateusz@loskot.net>
+#
+# Distributed under the Boost Software License, Version 1.0.
+# (See accompanying file LICENSE_1_0.txt or copy 
+# at http://www.boost.org/LICENSE_1_0.txt)
+#
+import os ;
+
+local BOOST_ROOT = [ os.environ BOOST_ROOT ] ;
+if $(BOOST_ROOT)
+{
+   use-project /boost : $(BOOST_ROOT) ;
+}
+local JSON_SPIRIT_ROOT = [ os.environ JSON_SPIRIT_ROOT ] ;
+if $(JSON_SPIRIT_ROOT)
+{
+   use-project /json : $(JSON_SPIRIT_ROOT) ;
+}
+
+project json_benchmark
+    :
+    requirements
+        <include>.
+        <toolset>clang:<cxxflags>-std=c++11
+        <toolset>gcc:<cxxflags>-std=c++11
+        <toolset>gcc:<cxxflags>-ftemplate-depth=300
+        <toolset>msvc:<cxxflags>/wd4996
+        <use>/boost//headers
+    ;
+
+exe benchmark_spirit
+    :
+    benchmark_spirit.cpp /json//json
+    ;
+
