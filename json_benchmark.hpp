@@ -65,7 +65,7 @@ inline result_t benchmark(std::size_t iterations, Container jsons, Parse parse)
 
 typedef std::vector<std::string> jsons_t;
 
-inline jsons_t load_datas(std::string file)
+inline jsons_t load_data(std::string file)
 {
     jsons_t v;
     std::ifstream ifs(file);
