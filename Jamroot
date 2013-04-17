@@ -15,7 +15,7 @@ if $(BOOST_ROOT)
 local JSON_SPIRIT_ROOT = [ os.environ JSON_SPIRIT_ROOT ] ;
 if $(JSON_SPIRIT_ROOT)
 {
-   use-project /json : $(JSON_SPIRIT_ROOT) ;
+   use-project /json_spirit : $(JSON_SPIRIT_ROOT) ;
 }
 
 project json_benchmark
@@ -29,8 +29,6 @@ project json_benchmark
         <use>/boost//headers
     ;
 
-exe benchmark_spirit
-    :
-    benchmark_spirit.cpp /json//json
-    ;
+# Declare executable targets of benchmarking programs
+exe benchmark_spirit : benchmark_spirit.cpp /json_spirit//json ;
 
