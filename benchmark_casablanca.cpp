@@ -6,10 +6,9 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 //
 #include "json_benchmark.hpp"
-#include <ciere/json/value.hpp>
-#include <ciere/json/io.hpp>
+#include  <json.h> // casablanca
 namespace jb = jsonbench;
-namespace cj = ciere::json;
+namespace wj = web::json;
 int main()
 {
     try
@@ -17,15 +16,16 @@ int main()
         //auto const jsons = jb::get_one_json_per_line();
         auto const jsons = jb::get_json();
         auto const marks = jb::benchmark(jsons, [](std::string const& s) {
-            cj::value jv;
-            bool parsed = cj::construct(s, jv);
+            std::stringstream ss;
+            ss << s;
+            wj::value jv = wj::value::parse(ss);
 #ifdef JSON_BENCHMARK_DUMP_PARSED_JSON
-            std::cout << jv << std::endl;
+            jv.serialize(std::cout);
 #endif
-            return parsed && jv.type() != cj::null_type;
+            return !jv.is_null();
         });
 
-        jb::print_result(std::cout << "spirit: ", marks);
+        jb::print_result(std::cout << "casablanca: ", marks);
         return EXIT_SUCCESS;
     }
     catch (std::exception const& e)
