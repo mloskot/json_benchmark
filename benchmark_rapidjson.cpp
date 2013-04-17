@@ -11,14 +11,11 @@
 #include <rapidjson/filestream.h>
 #include <rapidjson/prettywriter.h>
 namespace rj = rapidjson;
-namespace jb = jsonbench;
 int main()
 {
     try
     {
-        //auto const jsons = jb::get_one_json_per_line();
-        auto const jsons = jb::get_json();
-        auto const marks = jb::benchmark(jsons, [](std::string const& s) {
+        jsonbench::run_benchmark("rapidjson", [](std::string const& s) {
             rj::Document d;
             d.Parse<0>(s.c_str());
 #ifdef JSON_BENCHMARK_DUMP_PARSED_JSON
@@ -29,7 +26,6 @@ int main()
             return !d.IsNull();
         });
 
-        jb::print_result(std::cout << "rapidjson: ", marks);
         return EXIT_SUCCESS;
     }
     catch (std::exception const& e)
