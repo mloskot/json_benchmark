@@ -5,7 +5,7 @@ Simple benchmark for a number of C++ JSON libraries.
 
 List of currently measured libraries: 
 
-* [casablanca](https://casablanca.codeplex.com/)
+* [casablanca](https://casablanca.codeplex.com/) - C++ REST SDK (codename "Casablanca")
 * [json_spirit](https://github.com/cierelabs/json_spirit)
 * [jsoncpp](http://jsoncpp.sourceforge.net/)
 * [libjson](http://sourceforge.net/projects/libjson/)
