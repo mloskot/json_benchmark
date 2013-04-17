@@ -12,60 +12,89 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <stdexcept>
 #include <string>
 #include <tuple>
 #include <vector>
 #include <utility>
 #include "high_resolution_timer.hpp"
 
+// Uncomment to print all tested JSON data to stdout
+#ifndef JSON_BENCHMARK_DUMP_PARSED_JSON
+//#define JSON_BENCHMARK_DUMP_PARSED_JSON
+#endif
+
 namespace jsonbench
 {
-std::size_t const MAX_ITERATIONS = 100;
 
-typedef std::tuple<std::size_t, std::size_t, double, double> result_t;
+std::size_t max_marks = 2;
+std::size_t max_iterations = 1000;
+
+typedef std::tuple<std::size_t, std::size_t, std::size_t, double, double> result_t;
 
 template <typename Result>
 inline std::ostream& print_result(std::ostream& os, Result r)
 {
     using std::get;
-    os << get<1>(r) << " x " << get<0>(r) << " iterations in " << get<2>(r) << " to " << get<3>(r) << std::endl;
+    os << get<1>(r) << " iterations of " << get<2>(r) << " parsings in " 
+        << get<3>(r) << " to " << get<4>(r) << " sec based on " 
+        << get<0>(r) << " benchmarks" << std::endl;
     return os;
 }
 
 template <typename Result, typename Timer>
-inline void set_result(Result& m, Timer const& t)
+inline void set_mark(Result& r, Timer const& t)
 {
     using std::get;
-    get<2>(m) = t.elapsed();
-    get<3>(m) = (std::max)(get<2>(m), get<3>(m));
-    get<2>(m) = (std::min)(get<2>(m), get<3>(m));
-    std::get<1>(m) += 1;
+    get<3>(r) = t.elapsed();
+    get<4>(r) = (std::max)(get<3>(r), get<4>(r));
+    get<3>(r) = (std::min)(get<3>(r), get<4>(r));
 }
 
 template <typename Container, typename Parse>
-inline result_t benchmark(std::size_t iterations, Container jsons, Parse parse)
+inline result_t benchmark(std::size_t marks, std::size_t iterations, Container const& jsons, Parse parse)
 {
-    result_t m;
-    std::get<0>(m) = jsons.size();
-    std::sort(jsons.begin(), jsons.end());
-    std::size_t rep = 0;
-    do
+    result_t r;
+    std::get<0>(r) = marks;
+    std::get<1>(r) = iterations;
+    std::get<2>(r) = jsons.size(); // batch size per iteration
+
+    for (decltype(marks) m = 0; m < marks; ++m)
     {
         util::high_resolution_timer t;
-        for (auto const& s : jsons)
+        for (decltype(iterations) i = 0U; i < iterations; ++i)
         {
-            if (!parse(s))
-                throw __LINE__;
+            for (auto const& s : jsons)
+            {
+                if (!parse(s))
+                    throw std::runtime_error("parse failed");
+            }
         }
-        set_result(m, t);
-        rep++;
-    } while (rep < iterations && std::next_permutation(jsons.begin(), jsons.end()));
-    return m;
+        set_mark(r, t);
+    }
+    return r;
+}
+
+template <typename Container, typename Parse>
+inline result_t benchmark(Container const& jsons, Parse parse)
+{
+    return benchmark(max_marks, max_iterations, jsons, parse);
 }
 
 typedef std::vector<std::string> jsons_t;
 
-inline jsons_t load_data(std::string file)
+inline jsons_t load_json(std::string file)
+{
+    typedef std::string::value_type char_t;
+    typedef std::istreambuf_iterator<char_t> iterator_t;
+
+    jsons_t v;
+    std::ifstream ifs(file);
+    v.push_back(std::string(iterator_t(ifs), (iterator_t())));
+    return v; 
+}
+
+inline jsons_t load_jsons(std::string file)
 {
     jsons_t v;
     std::ifstream ifs(file);
@@ -74,12 +103,15 @@ inline jsons_t load_data(std::string file)
     return v;
 }
 
+inline jsons_t get_json()
+{
+    return load_json("data/canada.json");
+}
 inline jsons_t get_one_json_per_line()
 {
-    return load_data("data/one-json-per-line.txt");
+    return load_jsons("data/one-json-per-line.txt");
 }
 
-}
+} // namespace jsonbench
 
-#endif MLOSKOT_JSON_BENCHMARK_HPP_INCLUDED
-
+#endif
