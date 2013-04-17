@@ -27,9 +27,52 @@
 namespace jsonbench
 {
 
-std::size_t max_marks = 2;
+//
+// Default benchmark settings
+//
+std::size_t max_marks = 10;
 std::size_t max_iterations = 1000;
 
+//
+// Routines handling test data files
+//
+typedef std::vector<std::string> jsons_t;
+
+inline jsons_t load_json(std::string file)
+{
+    typedef std::string::value_type char_t;
+    typedef std::istreambuf_iterator<char_t> iterator_t;
+
+    jsons_t v;
+    std::ifstream ifs(file);
+    v.push_back(std::string(iterator_t(ifs), (iterator_t())));
+    return v; 
+}
+
+inline jsons_t load_jsons(std::string file)
+{
+    jsons_t v;
+    std::ifstream ifs(file);
+    for (std::string line; std::getline(ifs, line); )
+        v.push_back(line);
+    return v;
+}
+
+// load single large JSON string
+inline jsons_t get_large()
+{
+    return load_json("data/canada.json");
+}
+
+// load collection of small to medium size JSON strings
+inline jsons_t get_small()
+{
+    return load_jsons("data/one-json-per-line.jsons");
+}
+
+//
+// Benchmark running routines
+//
 typedef std::tuple<std::size_t, std::size_t, std::size_t, double, double> result_t;
 
 template <typename Result>
@@ -81,35 +124,17 @@ inline result_t benchmark(Container const& jsons, Parse parse)
     return benchmark(max_marks, max_iterations, jsons, parse);
 }
 
-typedef std::vector<std::string> jsons_t;
-
-inline jsons_t load_json(std::string file)
+template <typename Parse>
+inline void run_benchmark(char const* name, Parse parse)
 {
-    typedef std::string::value_type char_t;
-    typedef std::istreambuf_iterator<char_t> iterator_t;
-
-    jsons_t v;
-    std::ifstream ifs(file);
-    v.push_back(std::string(iterator_t(ifs), (iterator_t())));
-    return v; 
-}
-
-inline jsons_t load_jsons(std::string file)
-{
-    jsons_t v;
-    std::ifstream ifs(file);
-    for (std::string line; std::getline(ifs, line); )
-        v.push_back(line);
-    return v;
-}
-
-inline jsons_t get_json()
-{
-    return load_json("data/canada.json");
-}
-inline jsons_t get_one_json_per_line()
-{
-    return load_jsons("data/one-json-per-line.txt");
+    {
+        auto const marks = benchmark(max_marks, max_iterations, get_small(), parse);
+        print_result(std::cout << name << ".small: ", marks);
+    }
+    {
+        auto const marks = benchmark(max_marks, max_iterations, get_large(), parse);
+        print_result(std::cout << name << ".large: ", marks);
+    }
 }
 
 } // namespace jsonbench
