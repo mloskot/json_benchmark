@@ -5,6 +5,7 @@
 # (See accompanying file LICENSE_1_0.txt or copy 
 # at http://www.boost.org/LICENSE_1_0.txt)
 #
+import notfile
 import os ;
 
 # Configure dependencies 
@@ -21,7 +22,11 @@ if $(JSON_SPIRIT_ROOT)
    use-project /json_spirit : $(JSON_SPIRIT_ROOT) ;
 }
 
+local RAPIDJSON_ROOT = [ os.environ RAPIDJSON_ROOT ] ;
+
+# Declare targets for dependencies
 lib jsoncpplib : : <name>jsoncpp : : <include>/usr/include/jsoncpp ;
+
 
 # Declare project 
 project json_benchmark
@@ -37,7 +42,17 @@ project json_benchmark
     ;
 
 # Declare executable targets of benchmarking programs
-exe benchmark_spirit : benchmark_spirit.cpp /json_spirit//json ;
-exe benchmark_rapidjson : benchmark_rapidjson.cpp ;
-exe benchmark_jsoncpp : benchmark_jsoncpp.cpp jsoncpplib ;
+rule bexe ( sources + : requirements * : target-name ? : default-build * )
+{
+    target-name ?= $(sources[1]:D=:S=) ;
+    exe $(target-name) : $(sources) : $(requirements) : $(default-build) ;
+}
+
+bexe benchmark_spirit.cpp /json_spirit//json ;
+bexe benchmark_rapidjson.cpp : <include>$(RAPIDJSON_ROOT)/include ; 
+bexe benchmark_jsoncpp.cpp jsoncpplib ;
+
+# TODO: find out how to run all programs after build
+#actions run-benchmark { $(>[1]) ; }
+#notfile benchmark_rapidjson-run : @run-benchmark : benchmark_rapidjson ;
 
