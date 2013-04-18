@@ -55,7 +55,7 @@ libjson.small: 1000 iterations of 500 parsings in 0.478065 to 0.486636 sec based
 GCC 4.7 (64-bit build)
 ----------------------
 
-HW: Intel(R) Xeon(R) CPU E5-2630L 0 @ 2.00GHz, 2 GB RAM
+HW: Intel(R) Xeon(R) CPU E5-2630L 0 @ 2.00GHz, 2 GB RAM;
 OS: Linux 64-bit (Debian 7)
     
 * small
@@ -77,7 +77,7 @@ spirit.large:    1000 iterations of 1 parsings in 988.167 to 995.634 sec based o
 Visual C++ 11.0 (32-bit build)
 ------------------------------
 
-HW: Intel(R) Xeon(R) CPU E5-2687W 0 @ 3.10GHz, 16 GB RAM
+HW: Intel(R) Xeon(R) CPU E5-2687W 0 @ 3.10GHz, 16 GB RAM;
 OS: Windows 7 64-bit
 
 * small
