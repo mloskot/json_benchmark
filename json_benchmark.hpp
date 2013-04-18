@@ -30,7 +30,7 @@ namespace jsonbench
 //
 // Default benchmark settings
 //
-std::size_t max_marks = 10;
+std::size_t max_marks = 2; // 10;
 std::size_t max_iterations = 1000;
 
 //
