@@ -1,4 +1,4 @@
-`json_benchmark`
+json_benchmark
 ==============
 
 Simple benchmark for a number of C++ JSON libraries.
@@ -69,9 +69,9 @@ JSON Writing
 Building
 ========
 
-Boost.Build configuration is provided and it assumes either your ```user-config.jam``` 
-file has ```use-project``` entry for [Boost](http://boost.org) (headers are required)
-and for every JSON library. For example:
+[Boost.Build](http://www.boost.org/boost-build2/) configuration is provided and
+it assumes either your ```user-config.jam``` file has ```use-project``` entry for
+[Boost](http://boost.org) (headers are required) and for every JSON library. For example:
 
 ```
 use-project /boost : /home/mloskot/boost/trunk ;
@@ -87,6 +87,8 @@ The environment variables can be passed directly on the Boost.Build invocation:
 b2 -sBOOST_ROOT=/home/mloskot/boost/trunk -sJSON_SPIRIT_ROOT=/home/mloskot/json_spirit
 ```
 and so on.
+
+Or, simply edit ```Jamroot``` file.
 
 License
 =======
