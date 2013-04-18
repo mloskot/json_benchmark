@@ -7,14 +7,11 @@
 //
 #include "json_benchmark.hpp"
 #include <json/json.h> // jsoncpp
-namespace jb = jsonbench;
 int main()
 {
     try
     {
-        //auto const jsons = jb::get_one_json_per_line();
-        auto const jsons = jb::get_json();
-        auto const marks = jb::benchmark(jsons, [](std::string const& s) -> bool {
+        jsonbench::run_benchmark("jsoncpp", [](std::string const& s) {
             Json::Value jv;
             Json::Reader jr;
 #ifdef JSON_BENCHMARK_DUMP_PARSED_JSON
@@ -24,7 +21,6 @@ int main()
             return jr.parse(s, jv) && jv.type() != Json::nullValue;
         });
 
-        jb::print_result(std::cout << "jsoncpp: ", marks);
         return EXIT_SUCCESS;
     }
     catch (std::exception const& e)

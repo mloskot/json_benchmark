@@ -18,6 +18,8 @@ if $(JSON_SPIRIT_ROOT)
    use-project /json_spirit : $(JSON_SPIRIT_ROOT) ;
 }
 
+lib jsoncpplib : : <name>jsoncpp : : <include>/usr/include/jsoncpp ;
+
 project json_benchmark
     :
     requirements
@@ -32,4 +34,5 @@ project json_benchmark
 # Declare executable targets of benchmarking programs
 exe benchmark_spirit : benchmark_spirit.cpp /json_spirit//json ;
 exe benchmark_rapidjson : benchmark_rapidjson.cpp ;
+exe benchmark_jsoncpp : benchmark_jsoncpp.cpp jsoncpplib ;
 
