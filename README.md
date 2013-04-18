@@ -1,4 +1,4 @@
-json_benchmark
+JSON Benchmark
 ==============
 
 Simple benchmark for a number of C++ JSON libraries.
@@ -42,35 +42,59 @@ There are two sets of JSON test data:
   * ```data/one-json-per-line.jsons``` collection of 500 sample JSON strings from sub-100 to 500 characters long.
 
 
-Note, all libraries are used to read and parse strings of narrow ```char``` 
+Important notes:
+* All timings obtained running optimised builds of the binaries.
+* All libraries are used to read and parse strings of narrow ```char``` 
 characters (i.e. ```std::string```), no ```wchar_t``` strings are used.
+* rapidjson was used in DOM parsing mode, not SAX
+* libjson supports lazy parsing, times collected for this modes was:
+```
+libjson.small: 1000 iterations of 500 parsings in 0.478065 to 0.486636 sec based on 2 benchmarks
+```
 
-All timings obtained running optimised builds of the binaries.
+GCC 4.7 (64-bit build)
+----------------------
 
-Visual C++ 11.0
----------------
+HW: Intel(R) Xeon(R) CPU E5-2630L 0 @ 2.00GHz, 2 GB RAM
+OS: Linux 64-bit (Debian 7)
+    
+* small
+
+```
+rapidjson.small: 1000 iterations of 500 parsings in 1.08639 to 1.08639 sec based on 2 benchmarks
+jsoncpp.small:   1000 iterations of 500 parsings in 18.5563 to 19.6208 sec based on 2 benchmarks
+spirit.small:    1000 iterations of 500 parsings in 27.4479 to 27.4479 sec based on 2 benchmarks
+```
+
+* large
+
+```
+rapidjson.large: 1000 iterations of 1 parsings in 13.8156 to 14.2241 sec based on 2 benchmarks
+jsoncpp.large:   1000 iterations of 1 parsings in 376.313 to 384.015 sec based on 2 benchmarks
+spirit.large:    1000 iterations of 1 parsings in 988.167 to 995.634 sec based on 2 benchmarks
+```
+
+Visual C++ 11.0 (32-bit build)
+------------------------------
+
+HW: Intel(R) Xeon(R) CPU E5-2687W 0 @ 3.10GHz, 16 GB RAM
+OS: Windows 7 64-bit
 
 * small
 
 ```
-rapidjson.small:  2 marks of 1000 x 500 batch of parsings in 0.961858 to 0.962361 per batch
-libjson.small:    2 marks of 1000 x 500 batch of parsings in 5.2787 to 5.29663 per batch
-jsoncpp.small:    2 marks of 1000 x 500 batch of parsings in 5.762 to 5.77978 per batch
-casablanca.small: 2 marks of 1000 x 500 batch of parsings in 17.7374 to 17.7587 per batch
-spirit.small:     2 marks of 1000 x 500 batch of parsings in 22.137 to 22.137 per batch
+rapidjson.small:  1000 iterations of 500 parsings in 0.961858 to 0.962361 sec based on 2 benchmarks
+libjson.small:    1000 iterations of 500 parsings in 5.2787 to 5.29663 sec based on 2 benchmarks
+jsoncpp.small:    1000 iterations of 500 parsings in 5.762 to 5.77978 sec based on 2 benchmarks
+casablanca.small: 1000 iterations of 500 parsings in 17.7374 to 17.7587 sec based on 2 benchmarks
+spirit.small:     1000 iterations of 500 parsings in 22.137 to 22.137 sec based on 2 benchmarks
 ```
+
 * large
 
 ```
-rapidjson.large:  2 marks of 1000 x 1 batch of parsings in 7.96621 to 7.97555 sec per batch
-libjson.large:    2 marks of 1000 x 1 batch of parsings in 240.289 to 240.289 sec per batch
-```
-
-Notes:
-* rapidjson was used in DOM parsing mode, not SAX
-* libjson supports lazy parsing, times collected for this modes was:
-```
-libjson.small:    2 marks of 1000 x 500 batch of parsings in 0.478065 to 0.486636 per batch
+rapidjson.large:  1000 iterations of 1 parsings in 7.96621 to 7.97555 sec based on 2 benchmarks
+libjson.large:    1000 iterations of 1 parsings in 240.289 to 240.289 sec based on 2 benchmarks
 ```
 
 JSON Writing
@@ -96,7 +120,9 @@ Alternatively, set the environment variables:
 
 The environment variables can be passed directly on the Boost.Build invocation:
 ```
-b2 -sBOOST_ROOT=/home/mloskot/boost/trunk -sJSON_SPIRIT_ROOT=/home/mloskot/json_spirit
+b2 -sBOOST_ROOT=/home/mloskot/boost/trunk \
+   -sJSON_SPIRIT_ROOT=/home/mloskot/json_spirit \
+   -sRAPIDJSON_ROOT=/home/mloskot/rapidjson
 ```
 and so on.
 
