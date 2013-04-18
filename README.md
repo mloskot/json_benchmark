@@ -43,7 +43,9 @@ There are two sets of JSON test data:
 
 
 Note, all libraries are used to read and parse strings of narrow ```char``` 
-characters (```std::string```), no ```wchar_t``` strings are used.
+characters (i.e. ```std::string```), no ```wchar_t``` strings are used.
+
+All timings obtained running optimised builds of the binaries.
 
 Visual C++ 11.0
 ---------------
@@ -99,6 +101,12 @@ b2 -sBOOST_ROOT=/home/mloskot/boost/trunk -sJSON_SPIRIT_ROOT=/home/mloskot/json_
 and so on.
 
 Or, simply edit ```Jamroot``` file.
+
+In order to build the benchmark programs run:
+
+```
+b2 variant=release
+```
 
 License
 =======
