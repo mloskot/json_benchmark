@@ -7,11 +7,14 @@
 #
 import os ;
 
+# Configure dependencies 
+
 local BOOST_ROOT = [ os.environ BOOST_ROOT ] ;
 if $(BOOST_ROOT)
 {
    use-project /boost : $(BOOST_ROOT) ;
 }
+
 local JSON_SPIRIT_ROOT = [ os.environ JSON_SPIRIT_ROOT ] ;
 if $(JSON_SPIRIT_ROOT)
 {
@@ -20,6 +23,7 @@ if $(JSON_SPIRIT_ROOT)
 
 lib jsoncpplib : : <name>jsoncpp : : <include>/usr/include/jsoncpp ;
 
+# Declare project 
 project json_benchmark
     :
     requirements
