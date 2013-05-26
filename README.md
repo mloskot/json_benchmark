@@ -10,6 +10,7 @@ List of currently measured libraries:
 * [jsoncpp](http://jsoncpp.sourceforge.net/)
 * [libjson](http://sourceforge.net/projects/libjson/)
 * [rapidjson](http://code.google.com/p/rapidjson/)
+* [QJsonDocument](http://qt-project.org/doc/qt-5.0/qtcore/qjsondocument.html)
 
 Disclaimer
 ----------

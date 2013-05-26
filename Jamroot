@@ -24,6 +24,12 @@ if $(JSON_SPIRIT_ROOT)
 
 local RAPIDJSON_ROOT = [ os.environ RAPIDJSON_ROOT ] ;
 
+local QT_ROOT = [ os.environ QTDIR ] ;
+if $(QT_ROOT)
+{
+   using qt5 : $(QT_ROOT) ;
+}
+
 # Declare targets for dependencies
 lib jsoncpplib : : <name>jsoncpp : : <include>/usr/include/jsoncpp ;
 
@@ -51,6 +57,11 @@ rule bexe ( sources + : requirements * : target-name ? : default-build * )
 bexe benchmark_spirit.cpp /json_spirit//json ;
 bexe benchmark_rapidjson.cpp : <include>$(RAPIDJSON_ROOT)/include ; 
 bexe benchmark_jsoncpp.cpp jsoncpplib ;
+
+if $(QT_ROOT)
+{
+    exe benchmark_qjsondoc : benchmark_qjsondoc.cpp /qt5//QtCore ;
+}
 
 # TODO: find out how to run all programs after build
 #actions run-benchmark { $(>[1]) ; }
