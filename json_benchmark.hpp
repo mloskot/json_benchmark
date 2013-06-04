@@ -89,18 +89,15 @@ template <typename Result, typename Timer>
 inline void set_mark(Result& r, Timer const& t)
 {
     using std::get;
-    get<3>(r) = t.elapsed();
-    get<4>(r) = (std::max)(get<3>(r), get<4>(r));
-    get<3>(r) = (std::min)(get<3>(r), get<4>(r));
+    auto const m = t.elapsed();
+    get<3>(r) = get<3>(r) < 0 ? m : (std::min)(m, get<3>(r));
+    get<4>(r) = get<4>(r) < 0 ? m : (std::max)(m, get<4>(r));
 }
 
 template <typename Container, typename Parse>
 inline result_t benchmark(std::size_t marks, std::size_t iterations, Container const& jsons, Parse parse)
 {
-    result_t r;
-    std::get<0>(r) = marks;
-    std::get<1>(r) = iterations;
-    std::get<2>(r) = jsons.size(); // batch size per iteration
+    result_t r = std::make_tuple(marks, iterations, jsons.size(), -1.0, -1.0);
 
     for (decltype(marks) m = 0; m < marks; ++m)
     {
