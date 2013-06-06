@@ -12,6 +12,10 @@ List of currently measured libraries:
 * [rapidjson](http://code.google.com/p/rapidjson/)
 * [QJsonDocument](http://qt-project.org/doc/qt-5.0/qtcore/qjsondocument.html)
 
+Requirements
+* C++11 compiler
+* Boost headers
+
 JSON Reading
 ============
 
