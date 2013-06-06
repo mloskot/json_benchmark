@@ -12,16 +12,6 @@ List of currently measured libraries:
 * [rapidjson](http://code.google.com/p/rapidjson/)
 * [QJsonDocument](http://qt-project.org/doc/qt-5.0/qtcore/qjsondocument.html)
 
-Disclaimer
-----------
-
-I created this benchmark driven by curiosity and for my own purposes, with hope to 
-obtain useful and interesting results, for myself and others too.
-I do not have any objective of making ultimate performance shootout.
-This is not a rocket science, but a simple set of C++ programs, with likelyhood
-of bugs or inconsistencies. Found any, please report. Comments and improvements
-are always welcome!
-
 JSON Reading
 ============
 
@@ -134,6 +124,16 @@ In order to build the benchmark programs run:
 ```
 b2 variant=release
 ```
+
+Disclaimer
+==========
+
+I created this benchmark driven by curiosity and for my own purposes, with hope to 
+obtain useful and interesting results, for myself and others too.
+I do not have any objective of making ultimate performance shootout.
+This is not a rocket science, but a simple set of C++ programs, with likelyhood
+of bugs or inconsistencies. Found any, please report. Comments and improvements
+are always welcome!
 
 License
 =======
