@@ -147,4 +147,4 @@ Copyright
 
 Copyright 2013 Mateusz Loskot <mateusz at loskot dot net>
 
-and others (see copyright headers in source files).
+and other hackers (see copyright headers in source files).
