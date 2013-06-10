@@ -1,7 +1,7 @@
 JSON Benchmark
 ==============
 
-Simple benchmark for a number of C++ JSON libraries.
+Simple benchmark for a number of **C++** **JSON** libraries.
 
 List of currently measured libraries: 
 
@@ -15,6 +15,9 @@ List of currently measured libraries:
 Requirements
 * C++11 compiler
 * Boost headers
+* 
+There are no C libraries included in this benchmark, but feel free if you'd like to
+contribute some (obviously, a C++ wrapper would be required).
 
 JSON Reading
 ============
