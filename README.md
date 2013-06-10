@@ -129,6 +129,13 @@ In order to build the benchmark programs run:
 b2 variant=release
 ```
 
+Other Benchmarks
+================
+
+List of other benchmarks of JSON C++ libraries available on the Web:
+
+* [Thiago Macieira's benchmark](https://plus.google.com/108138837678270193032/posts/7EVTACgwtxK)
+
 Disclaimer
 ==========
 
