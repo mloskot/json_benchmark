@@ -137,6 +137,7 @@ Other Benchmarks
 
 List of other benchmarks of JSON C++ libraries available on the Web:
 
+* [Native JSON Benchmark] (https://github.com/miloyip/nativejson-benchmark) by Milo Yip (2015)
 * [Thiago Macieira's benchmark](https://plus.google.com/108138837678270193032/posts/7EVTACgwtxK)
 
 Disclaimer
