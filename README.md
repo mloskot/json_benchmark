@@ -3,7 +3,7 @@ JSON Benchmark
 
 ---------------------------------------
 
-**NOTE: This benchmark is not actively maintained and has been superseded by Milo's [Native JSON Benchmark]](https://github.com/miloyip/nativejson-benchmark).**
+**NOTE: This benchmark is not actively maintained and has been superseded by Milo's [Native JSON Benchmark](https://github.com/miloyip/nativejson-benchmark).**
 
 ---------------------------------------
 
