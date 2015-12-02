@@ -1,6 +1,13 @@
 JSON Benchmark
 ==============
 
+---------------------------------------
+
+**NOTE: This benchmark is not actively maintained has been superseded by Milo's [Native JSON Benchmark]**
+
+---------------------------------------
+
+
 Simple benchmark for a number of **C++** **JSON** libraries.
 
 List of currently measured libraries: 
